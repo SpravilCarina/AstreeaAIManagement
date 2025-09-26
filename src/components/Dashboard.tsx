@@ -24,6 +24,8 @@ const Dashboard: React.FC<DashboardProps> = ({ chargerStatus, isConnected }) => 
   const [temperature, setTemperature] = useState(42);
   const [sessionTime, setSessionTime] = useState(0);
   const [energyDelivered, setEnergyDelivered] = useState(23.8);
+  const [sessionActive, setSessionActive] = useState(true);
+  const [isRunningDiagnostics, setIsRunningDiagnostics] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -84,6 +86,32 @@ const Dashboard: React.FC<DashboardProps> = ({ chargerStatus, isConnected }) => 
   const statusDetails = getStatusDetails();
   const StatusIcon = statusDetails.icon;
 
+  const handleStopSession = () => {
+    if (sessionActive) {
+      setSessionActive(false);
+      setCurrentPower(0);
+      setCurrent(0);
+      // Show confirmation
+      alert('Charging session stopped successfully');
+    } else {
+      alert('No active charging session to stop');
+    }
+  };
+
+  const handleRunDiagnostics = () => {
+    setIsRunningDiagnostics(true);
+    // Simulate diagnostic process
+    setTimeout(() => {
+      setIsRunningDiagnostics(false);
+      alert('Diagnostics completed successfully. All systems operational.');
+    }, 3000);
+  };
+
+  const handleOptimizeSettings = () => {
+    // Simulate optimization
+    alert('Settings optimized for maximum efficiency. Charging speed increased by 5%.');
+    setCurrentPower(prev => prev * 1.05);
+  };
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       {/* Header */}
@@ -245,15 +273,26 @@ const Dashboard: React.FC<DashboardProps> = ({ chargerStatus, isConnected }) => 
       <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
         <div className="flex flex-wrap gap-3">
-          <button className="flex items-center space-x-2 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded-lg transition-colors">
+          <button 
+            onClick={handleStopSession}
+            disabled={!sessionActive}
+            className="flex items-center space-x-2 bg-blue-100 hover:bg-blue-200 disabled:bg-gray-100 disabled:text-gray-400 text-blue-700 px-4 py-2 rounded-lg transition-colors"
+          >
             <Power className="h-4 w-4" />
-            <span>Stop Session</span>
+            <span>{sessionActive ? 'Stop Session' : 'No Active Session'}</span>
           </button>
-          <button className="flex items-center space-x-2 bg-green-100 hover:bg-green-200 text-green-700 px-4 py-2 rounded-lg transition-colors">
+          <button 
+            onClick={handleRunDiagnostics}
+            disabled={isRunningDiagnostics}
+            className="flex items-center space-x-2 bg-green-100 hover:bg-green-200 disabled:bg-gray-100 disabled:text-gray-400 text-green-700 px-4 py-2 rounded-lg transition-colors"
+          >
             <Activity className="h-4 w-4" />
-            <span>Run Diagnostics</span>
+            <span>{isRunningDiagnostics ? 'Running...' : 'Run Diagnostics'}</span>
           </button>
-          <button className="flex items-center space-x-2 bg-purple-100 hover:bg-purple-200 text-purple-700 px-4 py-2 rounded-lg transition-colors">
+          <button 
+            onClick={handleOptimizeSettings}
+            className="flex items-center space-x-2 bg-purple-100 hover:bg-purple-200 text-purple-700 px-4 py-2 rounded-lg transition-colors"
+          >
             <TrendingUp className="h-4 w-4" />
             <span>Optimize Settings</span>
           </button>
