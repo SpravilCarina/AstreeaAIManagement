@@ -57,7 +57,33 @@ const Settings: React.FC = () => {
   const saveSettings = () => {
     // Simulate saving settings
     setUnsavedChanges(false);
-    // Show success message or handle save logic
+    
+    // Handle notifications based on settings
+    if (settings.mobileNotifications) {
+      // Simulate mobile push notification
+      if ('Notification' in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            new Notification('Astreea Charger Settings', {
+              body: 'Mobile push notifications have been enabled successfully!',
+              icon: '/favicon.ico'
+            });
+          } else {
+            alert('Mobile Push Notification: Settings saved! Mobile notifications enabled.\n\nNote: Please allow notifications in your browser settings to receive push notifications.');
+          }
+        });
+      } else {
+        alert('Mobile Push Notification: Settings saved! Mobile notifications enabled.\n\nNote: Your browser does not support push notifications.');
+      }
+    }
+    
+    if (settings.emailNotifications) {
+      // Simulate email notification
+      alert('Email Notification Sent!\n\nTo: your-email@example.com\nSubject: Astreea Charger Settings Updated\n\nYour charger settings have been successfully updated. Email notifications are now enabled.\n\nBest regards,\nAstreea Support Team');
+    }
+    
+    // Show general success message
+    alert('Settings saved successfully! All changes have been applied to your Astreea charger.');
   };
 
   const resetToDefaults = () => {

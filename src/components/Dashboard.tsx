@@ -264,7 +264,9 @@ const Dashboard: React.FC<DashboardProps> = ({ chargerStatus, isConnected }) => 
             </div>
           </div>
           <button className="mt-4 text-blue-600 text-sm font-medium hover:text-blue-800">
-            View all recommendations →
+            <span onClick={() => alert('AI Recommendations:\n\n• Schedule charging during off-peak hours (11 PM - 6 AM) to save $23/month\n• Your charging efficiency has improved 12% this month - excellent!\n• Consider pre-conditioning on weekends to reduce session time by 23%\n• Temperature management is optimal - continue current practices\n• Next maintenance recommended in 2 weeks based on usage patterns\n• Load balancing is working perfectly across your charger network')}>
+              View all recommendations →
+            </span>
           </button>
         </div>
       </div>
