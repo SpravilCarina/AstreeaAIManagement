@@ -138,8 +138,28 @@ const ChatAssistant: React.FC = () => {
   };
 
   const handleQuickAction = (action: string) => {
-    setInputValue(action);
-    setTimeout(() => handleSendMessage(), 100);
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      type: 'user',
+      content: action,
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setIsTyping(true);
+
+    // Simulate AI processing time
+    setTimeout(() => {
+      const aiResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        type: 'ai',
+        content: generateAIResponse(action),
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, aiResponse]);
+      setIsTyping(false);
+    }, 1500);
   };
 
   const formatMessage = (content: string) => {

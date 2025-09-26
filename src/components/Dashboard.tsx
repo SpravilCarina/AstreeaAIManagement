@@ -174,7 +174,7 @@ const Dashboard: React.FC<DashboardProps> = ({ chargerStatus, isConnected }) => 
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-sm text-gray-500">Temperature</p>
-              <p className="text-2xl font-bold text-gray-900">{temperature}</p>
+              <p className="text-2xl font-bold text-gray-900">{Math.round(temperature)}</p>
               <p className="text-xs text-gray-400">°C</p>
             </div>
             <div className={`p-3 rounded-lg ${temperature > 45 ? 'bg-red-100' : 'bg-orange-100'}`}>
