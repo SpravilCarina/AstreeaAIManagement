@@ -70,7 +70,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-pink-50">
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
